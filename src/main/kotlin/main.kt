@@ -1,7 +1,13 @@
 import org.jetbrains.kotlinx.dataframe.DataColumn
+import org.jetbrains.kotlinx.dataframe.annotations.DataSchema
+import org.jetbrains.kotlinx.dataframe.api.cast
 import org.jetbrains.kotlinx.dataframe.api.columnOf
+import org.jetbrains.kotlinx.dataframe.api.dataFrameOf
+import org.jetbrains.kotlinx.dataframe.api.filter
+import org.jetbrains.kotlinx.dataframe.api.print
 import org.jetbrains.kotlinx.dataframe.api.toColumn
 
+@DataSchema
 interface Person {
     val name: String
     val age: Int
@@ -18,4 +24,8 @@ fun main(args: Array<String>) {
         "Bob", 20
     ).cast<Person>()
     println(df)
+    
+    // age only available after executing `build` or `kspKotlin`!
+    val teens = df.filter { age in 10..19 }
+    teens.print()
 }

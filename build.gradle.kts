@@ -3,6 +3,7 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 plugins {
     kotlin("jvm") version "1.7.0"
     application
+    kotlin("plugin.dataframe") version "0.8.0"
 }
 
 group = "org.example"
@@ -17,9 +18,13 @@ dependencies {
     testImplementation(kotlin("test"))
 }
 
+// Required for IDE to pick up inferred schema
+kotlin.sourceSets.getByName("main").kotlin.srcDir("build/generated/ksp/main/kotlin/")
+
 tasks.test {
     useJUnit()
 }
+
 
 tasks.withType<KotlinCompile>() {
     kotlinOptions.jvmTarget = "11"
